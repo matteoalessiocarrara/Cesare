@@ -24,7 +24,7 @@
 #define NLETTERE 26 /*'z'-'a'+1*/
 #define mod(a, b) (((a)<0)?(b)+(a):(a)%(b))
 
-char offset; /*preso dalla main*/
+char g_offset; /*preso dalla main*/
 
 void Help_(char nome[], char msg[])
 {
@@ -46,12 +46,12 @@ char Modifica_C(char c, char l) /*codifica*/
 int main(int argc, char **argv)
 {
 	#define NOME_SW argv[0]
-	#define MOD argv[1] 
-	#define MAIN_OFFSET argv[2]
-	#define STR argv[3]
+	#define MOD argv[1] /*(-c | -d)*/
+	#define MAIN_OFFSET argv[2] /*offset*/
+	#define STR argv[3] /*stringa*/
 	#define Help(msg) Help_(NOME_SW, msg)
 
-	register char (*Modifica) (char c, char l);
+	register char (*Modifica) (char c, char l); /*puntatore a funzione Modifica_**/
 
 	if (argc != 3+1) Help("Numero di parametri errato");
 	offset=mod(atoll(MAIN_OFFSET), NLETTERE); /*offset>= di NLETTERE sono equivalenti a offset minori*/
