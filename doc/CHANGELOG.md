@@ -1,3 +1,7 @@
+5/9/2015
+--------
+ - Output su stdout, altra roba su stderr
+
 1/9/2015 
 --------
  - Aggiunto qualche commento

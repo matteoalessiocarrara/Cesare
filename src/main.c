@@ -28,7 +28,7 @@ char g_offset; /*preso dalla main*/
 
 void Help_(char nome[], char msg[])
 {
-	printf("%s\nUso: %s (-c | -d) offset stringa\n", msg, nome);
+	fprintf(stderr, "%s\nUso: %s (-c | -d) offset stringa\n", msg, nome);
 	exit(EXIT_FAILURE);
 }
 
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 	if (argc != 3+1) Help("Numero di parametri errato");
 	offset=mod(atoll(MAIN_OFFSET), NLETTERE); /*offset>= di NLETTERE sono equivalenti a offset minori*/
 	if((Modifica=(!strcmp("-c", MOD))?Modifica_C:(!strcmp("-d", MOD))?Modifica_D:NULL)==NULL) Help("-c o -d non trovato");
-	for(register unsigned long long i=0; STR[i]!='\0'; i++) printf("%c", ((STR[i]>='a')&&(STR[i]<='z'))?Modifica(STR[i], 'a'):((STR[i]>='A')&&(STR[i]<='Z'))?Modifica(STR[i], 'A'):STR[i]);
+	for(register unsigned long long i=0; STR[i]!='\0'; i++) printf("%c", ((STR[i]>='a')&&(STR[i]<='z'))?Modifica(STR[i], 'a'):((STR[i]>='A')&&(STR[i]<='Z'))?Modifica(STR[i], 'A'):STR[i]); /*stampa la stringa*/
 	printf("\n");
 	return EXIT_SUCCESS;
 }
