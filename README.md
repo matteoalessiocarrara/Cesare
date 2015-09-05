@@ -21,7 +21,8 @@ Cesare prende in input una stringa ASCII-7bit e "sposta" i caratteri a-z A-Z di 
 
 ## Altre informazioni ##
 
->  Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.
+> This is the Unix philosophy: Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.
+~ Doug McIlroy
 
 Aggiornamenti: [GitHub] (https://github.com/matteoalessiocarrara)  
 Email: sw.matteoac@gmail.com
