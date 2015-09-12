@@ -1,3 +1,7 @@
+12/9/2015
+---------
+ - Migliorato codice
+
 5/9/2015
 --------
  - Output su stdout, altra roba su stderr

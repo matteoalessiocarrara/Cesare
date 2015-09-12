@@ -24,23 +24,23 @@
 #define NLETTERE 26 /*'z'-'a'+1*/
 #define mod(a, b) (((a)<0)?(b)+(a):(a)%(b))
 
-char g_offset; /*preso dalla main*/
+char g_offset; /*offset, preso dalla main*/
 
-void Help_(char nome[], char msg[])
+void help_(char nome[], char msg[])
 {
 	fprintf(stderr, "%s\nUso: %s (-c | -d) offset stringa\n", msg, nome);
 	exit(EXIT_FAILURE);
 }
 
-char Modifica_D(char c, char l) /*decodifica*/
+char modifica_d(char c, char l) /*decodifica un carattere*/
 {
 	
-	return mod(c-l-offset, NLETTERE)+l;
+	return mod(c-l-g_offset, NLETTERE)+l;
 }
 
-char Modifica_C(char c, char l) /*codifica*/
+char modifica_c(char c, char l) /*codifica un carattere*/
 {
-	return mod(c-l+offset, NLETTERE)+l;
+	return mod(c-l+g_offset, NLETTERE)+l;
 }
 
 int main(int argc, char **argv)
@@ -49,14 +49,17 @@ int main(int argc, char **argv)
 	#define MOD argv[1] /*(-c | -d)*/
 	#define MAIN_OFFSET argv[2] /*offset*/
 	#define STR argv[3] /*stringa*/
-	#define Help(msg) Help_(NOME_SW, msg)
+	#define help(msg) help_(NOME_SW, msg)
 
-	register char (*Modifica) (char c, char l); /*puntatore a funzione Modifica_**/
+	register char (*modifica) (char c, char l); /*puntatore a funzione modifica_**/
 
-	if (argc != 3+1) Help("Numero di parametri errato");
-	offset=mod(atoll(MAIN_OFFSET), NLETTERE); /*offset>= di NLETTERE sono equivalenti a offset minori*/
-	if((Modifica=(!strcmp("-c", MOD))?Modifica_C:(!strcmp("-d", MOD))?Modifica_D:NULL)==NULL) Help("-c o -d non trovato");
-	for(register unsigned long long i=0; STR[i]!='\0'; i++) printf("%c", ((STR[i]>='a')&&(STR[i]<='z'))?Modifica(STR[i], 'a'):((STR[i]>='A')&&(STR[i]<='Z'))?Modifica(STR[i], 'A'):STR[i]); /*stampa la stringa*/
+	if (argc != 3+1) help("Numero di parametri errato");
+	g_offset=mod(atoll(MAIN_OFFSET), NLETTERE); /*offset>= di NLETTERE sono equivalenti a offset minori*/
+	if((modifica=(!strcmp("-c", MOD))?modifica_c:(!strcmp("-d", MOD))?modifica_d:NULL)==NULL) help("-c o -d non trovato");
+	
+	for(register unsigned long long i=0; STR[i]; i++)
+		printf("%c", ((STR[i]>='a')&&(STR[i]<='z'))?modifica(STR[i], 'a'):((STR[i]>='A')&&(STR[i]<='Z'))?modifica(STR[i], 'A'):STR[i]); /*stampa la stringa*/
 	printf("\n");
+
 	return EXIT_SUCCESS;
 }
