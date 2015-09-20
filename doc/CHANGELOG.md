@@ -1,3 +1,7 @@
+20/9/2015
+---------
+ - Migliorato codice
+
 12/9/2015
 ---------
  - Migliorato codice

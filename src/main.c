@@ -22,9 +22,9 @@
 #include <string.h>
 
 #define NLETTERE 26 /*'z'-'a'+1*/
-#define mod(a, b) (((a)<0)?(b)+(a):(a)%(b))
+#define mod(a, b) (((a) < 0)? (b)+(a) : (a)%(b))
 
-char g_offset; /*offset, preso dalla main*/
+char g_offset; /*offset per la (de)codifica, preso dalla main*/
 
 void help_(char nome[], char msg[])
 {
@@ -49,16 +49,25 @@ int main(int argc, char **argv)
 	#define MOD argv[1] /*(-c | -d)*/
 	#define MAIN_OFFSET argv[2] /*offset*/
 	#define STR argv[3] /*stringa*/
+
 	#define help(msg) help_(NOME_SW, msg)
 
-	register char (*modifica) (char c, char l); /*puntatore a funzione modifica_**/
-
-	if (argc != 3+1) help("Numero di parametri errato");
-	g_offset=mod(atoll(MAIN_OFFSET), NLETTERE); /*offset>= di NLETTERE sono equivalenti a offset minori*/
-	if((modifica=(!strcmp("-c", MOD))?modifica_c:(!strcmp("-d", MOD))?modifica_d:NULL)==NULL) help("-c o -d non trovato");
+	register char (*pmodifica) (char c, char l); /*puntatore a funzione modifica_c o modifica_d*/
 	
-	for(register unsigned long long i=0; STR[i]; i++)
-		printf("%c", ((STR[i]>='a')&&(STR[i]<='z'))?modifica(STR[i], 'a'):((STR[i]>='A')&&(STR[i]<='Z'))?modifica(STR[i], 'A'):STR[i]); /*stampa la stringa*/
+	/*decodifica o codifica un carattere, se possibile*/
+	#define modifica(c)\
+		((((c) >= 'a') && ((c) <= 'z'))? pmodifica((c), 'a') : (((c) >= 'A') && ((c) <= 'Z'))? pmodifica((c), 'A') : (c))
+
+	if (argc != 3+1)
+		help("Numero di parametri errato");
+	if((pmodifica = !strcmp("-c", MOD)? modifica_c : !strcmp("-d", MOD)? modifica_d : NULL) == NULL)
+		help("-c o -d non trovato");
+	
+	g_offset = mod(atoll(MAIN_OFFSET), NLETTERE); /*offset >= di NLETTERE sono equivalenti a offset minori*/
+
+	for(register unsigned long long i = 0; STR[i]; i++)
+		printf("%c", modifica(STR[i]));
+	
 	printf("\n");
 
 	return EXIT_SUCCESS;
