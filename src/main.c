@@ -60,12 +60,12 @@ int main(int argc, char **argv)
 
 	if (argc != 3+1)
 		help("Numero di parametri errato");
-	if((pmodifica = !strcmp("-c", MOD)? modifica_c : !strcmp("-d", MOD)? modifica_d : NULL) == NULL)
+	if ((pmodifica = !strcmp("-c", MOD)? modifica_c : !strcmp("-d", MOD)? modifica_d : NULL) == NULL)
 		help("-c o -d non trovato");
 	
 	g_offset = mod(atoll(MAIN_OFFSET), NLETTERE); /*offset >= di NLETTERE sono equivalenti a offset minori*/
 
-	for(register unsigned long long i = 0; STR[i]; i++)
+	for (register unsigned long long i = 0; STR[i]; i++)
 		printf("%c", modifica(STR[i]));
 	
 	printf("\n");
